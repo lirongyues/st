@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input type="file" accept="image/*">
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.js"></script>
+  <script>
+    const $ref_file = document.getElementsByTagName("input")[0]
+    $ref_file.onchange=function(){
+      var fileSize = $ref_file.files[0].size/1024/1024
+      if(fileSize > 5){
+        alert("上传文件超过5M，请重新选择!");
+        return
+      }
+      var formdata = new FormData();
+      formdata.append("smfile",$ref_file.files[0]);
+      axios.post("https://sm.ms/api/v2/upload" , formdata).then(
+        res=>console.log(res.data)
+        ).catch(
+          err=>console.log(err)
+        );
+    }
+  </script>
+</body>
+</html>
